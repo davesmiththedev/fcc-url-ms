@@ -3,12 +3,12 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 app.get('/:url', (req, res)=>{
-    res.end(req.params.url);
+    res.send(req.params.url, 200);
     
 });
 
 app.get('/', (req, res)=>{
-    res.end('Please add an url parameter');
+    res.send('Please add an url parameter', 200);
 });
 
 app.listen(port, ()=>{
