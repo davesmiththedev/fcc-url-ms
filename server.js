@@ -11,9 +11,9 @@ const appPath = 'https://aqueous-savannah-48973.herokuapp.com/';
 app.get('/new/*', (req, res)=>{
     // Get the url from the request
     var url = req.url.slice(5);
-    // Add secure https to the requrest if http not found at the start of the url
+    // Add http to the requrest if http not found at the start of the url
     if(url.slice(0,4) !== 'http'){
-        url = "https://" + url;
+        url = "http://" + url;
     }
     
     if(isURL(url)){
