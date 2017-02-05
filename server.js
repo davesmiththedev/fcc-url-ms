@@ -20,7 +20,7 @@ app.get('/new/*', (req, res)=>{
         // If the url already exists return the existing document
         db.findURL(url).then((foundResult)=>{
             if(foundResult){
-                foundResult = appPath + foundResult;
+                foundResult.shortURL = appPath + foundResult.shortURL;
                 return res.send(foundResult, 200);
             }else{
                 // If the url does not exist add it to the database and
