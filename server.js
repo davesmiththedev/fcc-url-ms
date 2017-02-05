@@ -48,9 +48,12 @@ app.get('/new/*', (req, res)=>{
 app.get('/*', (req, res)=>{
     // Get the url from the request
     var url = req.url.slice(1);
-    
-    //If the short url is in the database redirect to the full url
-    // otherwise retrun an error
+    // If no url provided show main page message
+    if(url == ''){
+        return res.send('Main Page', 200);
+    }
+    //If url is provided and short url is in the database redirect
+    // to the full url otherwise retrun an error
     db.findShortURL(url).then((foundResult)=>{
        if(foundResult){
            return res.redirect(foundResult.url);
