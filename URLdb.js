@@ -1,7 +1,5 @@
-require('dotenv').load();
 const mongo = require("mongodb").MongoClient;
 const dbURL = process.env.MONGO_DBURL;
-// const dbURL = 'mongodb://localhost:27017/URLdb'
 
 
 function highestShortURL(){
@@ -13,9 +11,7 @@ function highestShortURL(){
 module.exports = {
     addURL: function(urlData){
      return mongo.connect(dbURL).then((db)=>{
-         
          return db.collection('urls').insert(urlData);
-         
      });   
     },
     
@@ -36,8 +32,6 @@ module.exports = {
            var increment = parseInt(highest.shortURL) + 1;
            return increment;    
        }); 
-            
     }
-    
 };
 
