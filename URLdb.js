@@ -21,7 +21,7 @@ module.exports = {
     
     findShortURL: function(url){
         return mongo.connect(dbURL).then((db)=>{
-            return db.collection('urls').findOne({'shortURL': url}, {'_id': 0, 'url': 1});
+            return db.collection('urls').findOne({shortURL: parseInt(url)}, {_id: 0, url: 1});
         });   
     },
     
