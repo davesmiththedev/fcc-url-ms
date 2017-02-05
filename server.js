@@ -19,6 +19,7 @@ app.get('/new/*', (req, res)=>{
                     db.addURL(urlData).then(function(result){
                         var receipt =  result.ops[0];
                         delete receipt._id;
+                        receipt.shortURL = 'https://aqueous-savannah-48973.herokuapp.com/' + receipt.shortURL;
                         return res.send(receipt, 200);
                     });    
                 });

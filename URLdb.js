@@ -34,7 +34,7 @@ module.exports = {
     generateShortURL: function(){
        return highestShortURL().then((highest)=>{
            var increment = parseInt(highest.shortURL.slice(45)) + 1;
-           return 'https://aqueous-savannah-48973.herokuapp.com/' + increment;    
+           return increment;    
        }); 
             
     }
