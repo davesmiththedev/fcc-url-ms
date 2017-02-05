@@ -33,7 +33,7 @@ module.exports = {
     
     generateShortURL: function(){
        return highestShortURL().then((highest)=>{
-           var increment = parseInt(highest.shortURL.slice(45)) + 1;
+           var increment = parseInt(highest.shortURL) + 1;
            return increment;    
        }); 
             

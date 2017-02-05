@@ -2,6 +2,7 @@ const db = require("./URLdb");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
+const appPath = 'https://aqueous-savannah-48973.herokuapp.com/4';
    
 app.get('/new/*', (req, res)=>{
     var url = req.url.slice(5);
@@ -12,6 +13,7 @@ app.get('/new/*', (req, res)=>{
     if(isURL(url)){
         db.findURL(url).then((foundResult)=>{
             if(foundResult){
+                foundResult = appPath + foundResult;
                 return res.send(foundResult, 200);
             }else{
                 db.generateShortURL().then((shortURL)=>{
@@ -19,7 +21,7 @@ app.get('/new/*', (req, res)=>{
                     db.addURL(urlData).then(function(result){
                         var receipt =  result.ops[0];
                         delete receipt._id;
-                        receipt.shortURL = 'https://aqueous-savannah-48973.herokuapp.com/' + receipt.shortURL;
+                        receipt.shortURL = appPath + receipt.shortURL;
                         return res.send(receipt, 200);
                     });    
                 });
