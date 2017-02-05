@@ -2,7 +2,7 @@ const db = require("./URLdb");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
-const appPath = 'https://aqueous-savannah-48973.herokuapp.com/4';
+const appPath = 'https://aqueous-savannah-48973.herokuapp.com/';
    
 app.get('/new/*', (req, res)=>{
     var url = req.url.slice(5);
