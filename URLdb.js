@@ -6,7 +6,7 @@ const dbURL = process.env.MONGO_DBURL;
 
 function highestShortURL(){
         return mongo.connect(dbURL).then((db)=>{
-            return db.collection('urls').find({}).sort({'key': -1}).limit(1).next();
+            return db.collection('urls').find({}).sort({'shortURL': -1}).limit(1).next();
         });
     }
 
@@ -33,9 +33,7 @@ module.exports = {
     
     generateShortURL: function(){
        return highestShortURL().then((highest)=>{
-           console.log(highest.shortURL.slice(45));
            var increment = parseInt(highest.shortURL.slice(45)) + 1;
-           console.log(increment);
            return 'https://aqueous-savannah-48973.herokuapp.com/' + increment;    
        }); 
             
