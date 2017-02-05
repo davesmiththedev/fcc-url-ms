@@ -1,8 +1,6 @@
 require('dotenv').load();
-var user = process.env.MONGO_USERNAME;
-var pass = process.env.MONGO_PASSWORD;
 const mongo = require("mongodb").MongoClient;
-const dbURL = 'mongodb://'+ user +':' + pass + '@ds135039.mlab.com:35039/url-db'
+const dbURL = process.env.MONGO_DBURL;
 // const dbURL = 'mongodb://localhost:27017/URLdb'
 
 
