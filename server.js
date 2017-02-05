@@ -3,45 +3,49 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
    
-app.get('/*', (req, res)=>{
-    var url = req.url.slice(1);
+app.get('/new/*', (req, res)=>{
+    var url = req.url.slice(5);
+    if(url.slice(0,4) !== 'http'){
+        url = "https://" + url;
+    }
     
     if(isURL(url)){
-        console.log('It\'s a URL :)');
-        
         db.findURL(url).then((foundResult)=>{
             if(foundResult){
-                console.log('url:' + JSON.stringify(foundResult));
                 return res.send(foundResult, 200);
             }else{
-                var urlData = {url: url};
-                urlData.shortURL = '123';
-                console.log('add:' + JSON.stringify(urlData));
-                db.addURL(urlData).then(function(result){
-                    var receipt =  result.ops[0];
-                    delete receipt._id;
-                    return res.send(receipt, 200);
+                db.generateShortURL().then((shortURL)=>{
+                    var urlData = {url: url, shortURL: shortURL};
+                    db.addURL(urlData).then(function(result){
+                        var receipt =  result.ops[0];
+                        delete receipt._id;
+                        return res.send(receipt, 200);
+                    });    
                 });
+                
             }
         });
         
     }else{
-        console.log('Not a URL :(');
-        
-         db.findShortURL(url).then((foundResult)=>{
-           if(foundResult){
-               console.log('shortURL:' + foundResult.url);
-               return res.redirect(foundResult.url);
-               
-           }else{
-               
-                return res.send('You did not enter a valid url', 200);
-                
-           }
-        });
-        
+        return res.send({error: 'You did not use a valid url format. Try again.'}, 200);
     }
 });
+
+app.get('/*', (req, res)=>{
+    var url = req.url.slice(1);
+    
+    db.findShortURL(url).then((foundResult)=>{
+       if(foundResult){
+           return res.redirect(foundResult.url);
+       }else{
+           return res.send({error: 'The url provided is not in the database'}, 200);
+       }
+    });
+});
+
+app.get('/', (req, res)=>{
+    return res.end('Main Page');
+})
 
 app.listen(port, ()=>{
     console.log('Listening on port ' + port);
@@ -55,9 +59,4 @@ function isURL(str){
     }else{
         return false;
     }
-};
-
-//Generate a random short url
-function randomShortURL(){
-    //generate random url verify against urls collection
 };

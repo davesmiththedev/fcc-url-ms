@@ -5,6 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "async": "^0.2.10",
+    "dotenv": "^4.0.0",
+    "envs": "^0.1.6",
     "express": "^3.21.2",
     "mongodb": "^2.2.22",
     "socket.io": "^0.9.17"
