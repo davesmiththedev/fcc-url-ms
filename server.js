@@ -38,7 +38,7 @@ app.get('/*', (req, res)=>{
        if(foundResult){
            return res.redirect(foundResult.url);
        }else{
-           return res.send({error: 'The url provided is not in the database'}, 200);
+           return res.send({error: 'The url :' + foundResult + ': provided is not in the database'}, 200);
        }
     });
 });
