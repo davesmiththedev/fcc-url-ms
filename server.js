@@ -48,11 +48,10 @@ app.get('/new/*', (req, res)=>{
 //Route for shortened url requests
 app.get('/*', (req, res)=>{
     // Get the url from the request
-    // var url = req.url.slice(1);
-    var url = '';
+    var url = req.url.slice(1);
     // If no url provided show main page message
     if(url == ''){
-        res.sendFile(path.join(__dirname + '/home.html'));
+        return res.sendFile(path.join(__dirname + '/home.html'));
     }else{
     //If url is provided and short url is in the database redirect
     //  to the full url otherwise retrun an error
