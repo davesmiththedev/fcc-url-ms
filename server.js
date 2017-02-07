@@ -52,7 +52,7 @@ app.get('/*', (req, res)=>{
     var url = '';
     // If no url provided show main page message
     if(url == ''){
-        return res.send('Main Page');
+        return res.sendFile(path.join(__dirname + '/home.html'));
     }else{
     //If url is provided and short url is in the database redirect
     //  to the full url otherwise retrun an error
