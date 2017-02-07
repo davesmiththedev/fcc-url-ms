@@ -50,7 +50,7 @@ app.get('/*', (req, res)=>{
     var url = req.url.slice(1);
     // If no url provided show main page message
     if(url == ''){
-        return res.send('Main Page', 200);
+        return res.sendFile('home.html');
     }
     //If url is provided and short url is in the database redirect
     // to the full url otherwise retrun an error
@@ -62,12 +62,7 @@ app.get('/*', (req, res)=>{
        }
     });
 });
-
-// Route for requests to the homepage
-app.get('/', (req, res)=>{
-    return res.end('Main Page');
-})
-
+/*START SERVER*/
 app.listen(port, ()=>{
     console.log('Listening on port ' + port);
 });
