@@ -3,6 +3,7 @@ const db = require("./URLdb");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
+const path = require('path');
 const appPath = 'https://aqueous-savannah-48973.herokuapp.com/';
 // 
 //START ROUTES
@@ -50,7 +51,7 @@ app.get('/*', (req, res)=>{
     var url = req.url.slice(1);
     // If no url provided show main page message
     if(url == ''){
-        return res.sendFile('home.html');
+        return res.sendFile(path.join(__dirname + '/home.html'));
     }
     //If url is provided and short url is in the database redirect
     // to the full url otherwise retrun an error
