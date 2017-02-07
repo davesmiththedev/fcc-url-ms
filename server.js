@@ -48,20 +48,22 @@ app.get('/new/*', (req, res)=>{
 //Route for shortened url requests
 app.get('/*', (req, res)=>{
     // Get the url from the request
-    var url = req.url.slice(1);
+    // var url = req.url.slice(1);
+    var url = '';
     // If no url provided show main page message
     if(url == ''){
-        return res.sendFile(path.join(__dirname + '/home.html'));
-    }
+        return res.send('Main Page');
+    }else{
     //If url is provided and short url is in the database redirect
-    // to the full url otherwise retrun an error
-    db.findShortURL(url).then((foundResult)=>{
-       if(foundResult){
-           return res.redirect(foundResult.url);
-       }else{
-           return res.send({error: 'The url :' + url + ': provided is not in the database'}, 200);
-       }
-    });
+    //  to the full url otherwise retrun an error
+        db.findShortURL(url).then((foundResult)=>{
+           if(foundResult){
+               return res.redirect(foundResult.url);
+           }else{
+               return res.send({error: 'The url :' + url + ': provided is not in the database'}, 200);
+           }
+        });
+    }
 });
 /*START SERVER*/
 app.listen(port, ()=>{
