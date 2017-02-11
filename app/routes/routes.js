@@ -23,12 +23,12 @@ module.exports = function(app, db){
                     // If the url does not exist add it to the database and
                     // return the document
                     api.generateShortURL(db).then((shortURL)=>{
-                        var urlData = {url: url, shortURL: shortURL};
-                        api.addURL(urlData, db).then(function(result){
-                            var receipt =  result.ops[0];
-                            delete receipt._id;
-                            receipt.shortURL = appPath + receipt.shortURL;
-                            return res.status(200).send(receipt);
+                        var newURLObject = {url: url, shortURL: shortURL};
+                        api.addURL(newURLObject, db).then(function(result){
+                            var newURLResult =  result.ops[0];
+                            delete newURLResult._id;
+                            newURLResult.shortURL = appPath + newURLResult.shortURL;
+                            return res.status(200).send(newURLResult);
                         });    
                     });
                     

@@ -3,8 +3,8 @@ function highestShortURL(db){
     }
 
 module.exports = {
-    addURL: function(urlData, db){
-     return db.collection('urls').insert(urlData);
+    addURL: function(newURLObject, db){
+     return db.collection('urls').insert(newURLObject);
     },
     
     findShortURL: function(url, db){
