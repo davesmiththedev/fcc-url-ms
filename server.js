@@ -1,5 +1,5 @@
 // Define dependencies and environment constants
-const api = require("./URLdb");
+const api = require("./app/api/URLdb");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8080;
@@ -31,6 +31,7 @@ mongo.connect(dbURL, (err, db)=>{
             // If the url already exists return the existing document
             api.findURL(url, db).then((foundResult)=>{
                 if(foundResult){
+                    // prepend the app path to shortURL
                     foundResult.shortURL = appPath + foundResult.shortURL;
                     return res.status(200).send(foundResult);
                 }else{
@@ -51,7 +52,7 @@ mongo.connect(dbURL, (err, db)=>{
             
         }else{
             // Return an error if not a valid url
-            return res.status(200).send({error: 'You did not use a valid url format. Try again.'});
+            return res.status(400).send({error: 'You did not use a valid url format. Try again.'});
         }
     });
     
@@ -61,7 +62,7 @@ mongo.connect(dbURL, (err, db)=>{
         var url = req.url.slice(1);
         // If no url provided show homepage
         if(url == ''){
-            return res.sendFile(path.join(__dirname + '/home.html'));
+            return res.sendFile(path.join(__dirname + '/views/home.html'));
         }else{
         //If url is provided and short url is in the database redirect
         //  to the full url otherwise retrun an error
