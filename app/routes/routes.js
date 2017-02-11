@@ -13,25 +13,24 @@ module.exports = function(app, db){
         }
         
         if(isURL(url)){
-            // If the url already exists return the existing document
+            // Look for the url and if the url already exists return the existing document
             api.findURL(url, db).then((foundResult)=>{
                 if(foundResult){
                     // prepend the app path to shortURL
                     foundResult.shortURL = appPath + foundResult.shortURL;
                     return res.status(200).send(foundResult);
                 }else{
-                    // If the url does not exist add it to the database and
-                    // return the document
+            // If the url does not exist add it to the database and
+            // return the document
                     api.generateShortURL(db).then((shortURL)=>{
                         var newURLObject = {url: url, shortURL: shortURL};
-                        api.addURL(newURLObject, db).then(function(result){
+                        api.addURL(newURLObject, db).then((result)=>{
                             var newURLResult =  result.ops[0];
                             delete newURLResult._id;
                             newURLResult.shortURL = appPath + newURLResult.shortURL;
                             return res.status(200).send(newURLResult);
                         });    
                     });
-                    
                 }
             });
             
