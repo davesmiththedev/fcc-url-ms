@@ -47,7 +47,8 @@ module.exports = function(app, db){
         var url = req.url.slice(1);
         // If no url provided show homepage
         if(url == ''){
-            return res.sendFile(path.join(__dirname + '../../../views/home.html'));
+            var fileName = path.join(__dirname + '../../../views/home.html');
+            return res.sendFile(fileName);
         }else{
         //If url is provided and short url is in the database redirect
         //  to the full url otherwise retrun an error
